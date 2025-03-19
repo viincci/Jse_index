@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSE Analysis Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>JSE Market Analysis Dashboard</h1>
+    </header>
+    
+    <div id="loadingMessage" class="loading">Loading data and analyzing sentiment...</div>
+    
+    <div id="results" style="display: none;">
+      <div class="chart-container">
+        <h2>Stock Performance</h2>
+        <canvas id="stockChart"></canvas>
+      </div>
+      
+      <div class="chart-container">
+        <h2>Sentiment Analysis</h2>
+        <canvas id="sentimentChart"></canvas>
+      </div>
+      
+      <div class="table-container">
+        <h2>News Sentiment Details</h2>
+        <table id="sentimentTable">
+          <thead>
+            <tr>
+              <th>Headline</th>
+              <th>Sentiment</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody id="sentimentTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <script src="index.js"></script>
+</body>
+</html>
