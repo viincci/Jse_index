@@ -12,7 +12,7 @@ const config = {
 };
 
 // Decrypt Table Cipher Key
-function tableCipherDecrypt(text, cols) {
+function tCD(text, cols) {
     const rows = Math.ceil(text.length / cols);
     let table = new Array(rows).fill("").map(() => []);
     
@@ -29,7 +29,7 @@ function tableCipherDecrypt(text, cols) {
 }
 
 // Decrypt Hugging Face API Key
-const huggingFaceApiKey = tableCipherDecrypt(config.HuggingFaceApiKey, 5);
+const huggingFaceApiKey = tCD(config.HuggingFaceApiKey, 5);
 
 // Analyze sentiment using Hugging Face API
 async function analyzeSentiment(text) {
