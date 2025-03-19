@@ -5,7 +5,7 @@ const config = {
   stockSymbol: "JSE.JO", // JSE Top 40 Index
   newsSearchTerm: "JSE",
   newsApiKey: "2fb47ea16b6bb959da60e5557ec25bdc", // Replace with your own API key
-  huggingFaceApiKey: "YOUR_HUGGINGFACE_TOKEN", // Replace with your Hugging Face API token
+  huggingFaceApiKey: "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", // Replace with your Hugging Face API token
   huggingFaceModel: "ProsusAI/finbert"
 };
 
