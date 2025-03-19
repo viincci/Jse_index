@@ -1,42 +1,35 @@
 // index.js - Main script for JSE Analysis App
 
+// index.js - Main script for JSE Analysis App
+
 // Configuration
 const config = {
   stockSymbol: "JSE.JO", // JSE Top 40 Index
   newsSearchTerm: "JSE",
   newsApiKey: "2fb47ea16b6bb959da60e5557ec25bdc", // Replace with your own API key
-  huggingFaceApiKey: "YOUR_HUGGINGFACE_TOKEN", // Replace with your Hugging Face API token
+  HuggingFaceApiKey: "huHJdjB0fXhuAQUQ_qmnhUvDxTXaEWrwmWmGz", // Encrypted Key
   huggingFaceModel: "ProsusAI/finbert"
 };
 
-// Fetch stock data from Yahoo Finance API via proxy
-async function fetchStockData() {
-  try {
-    // Using a proxy service because Yahoo Finance doesn't support direct API calls from browsers
-    const response = await fetch(`https://yfapi.net/v8/finance/chart/${config.stockSymbol}?range=7d&interval=1d`, {
-      headers: {
-        'x-api-key': 'YOUR_YFAPI_KEY' // You'll need to sign up for this service or use another proxy
-      }
-    });
-    const data = await response.json();
-    return data.chart.result[0];
-  } catch (error) {
-    console.error("Error fetching stock data:", error);
-    return null;
-  }
+// Decrypt Table Cipher Key
+function tableCipherDecrypt(text, cols) {
+    const rows = Math.ceil(text.length / cols);
+    let table = new Array(rows).fill("").map(() => []);
+    
+    let index = 0;
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            if (index < text.length) {
+                table[j].push(text[index]);
+                index++;
+            }
+        }
+    }
+    return table.flat().join(""); // Read row-wise
 }
 
-// Fetch news data from GNews API
-async function fetchNewsData() {
-  try {
-    const response = await fetch(`https://gnews.io/api/v4/search?q=${config.newsSearchTerm}&lang=en&country=za&token=${config.newsApiKey}`);
-    const data = await response.json();
-    return data.articles || [];
-  } catch (error) {
-    console.error("Error fetching news data:", error);
-    return [];
-  }
-}
+// Decrypt Hugging Face API Key
+const huggingFaceApiKey = tableCipherDecrypt(config.HuggingFaceApiKey, 5);
 
 // Analyze sentiment using Hugging Face API
 async function analyzeSentiment(text) {
@@ -44,7 +37,7 @@ async function analyzeSentiment(text) {
     const response = await fetch(`https://api-inference.huggingface.co/models/${config.huggingFaceModel}`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${config.huggingFaceApiKey}`,
+        "Authorization": `Bearer ${huggingFaceApiKey}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ inputs: text })
@@ -58,6 +51,7 @@ async function analyzeSentiment(text) {
   }
 }
 
+// Rest of your code remains unchanged...
 // Process news headlines and get sentiment analysis
 async function processNewsHeadlines(articles) {
   const headlines = articles.map(article => article.title);
